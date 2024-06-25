@@ -1,1 +1,34 @@
+import lal
+import lalsimulation
 
+# Set the parameters of the binary system
+mass_1 = 30.0   # Mass of the first object (in solar masses)
+mass_2 = 20.0   # Mass of the second object (in solar masses)
+distance = 500.0   # Luminosity distance (in Mpc)
+inclination = 0.5   # Inclination angle (in radians)
+spin1x = 0.0   # Spin along the x-axis for object 1
+spin1y = 0.0   # Spin along the y-axis for object 1
+spin1z = 0.0   # Spin along the z-axis for object 1
+spin2x = 0.0   # Spin along the x-axis for object 2
+spin2y = 0.0   # Spin along the y-axis for object 2
+spin2z = 0.0   # Spin along the z-axis for object 2
+approximant = lalsimulation.TaylorF2   # Waveform approximant
+f_lower = 20.0   # Starting frequency of the waveform (in Hz)
+delta_t = 1.0 / 4096.0   # Time step size (in seconds)
+duration = 4.0   # Duration of the waveform (in seconds)
+
+# Convert parameters to SI units
+mass_1_si = mass_1 * lal.MSUN_SI
+mass_2_si = mass_2 * lal.MSUN_SI
+distance_si = distance * 1.0e6 * lal.PC_SI
+inclination_rad = inclination
+f_lower_hz = f_lower
+
+# Generate the waveform
+hp, hc = lalsimulation.SimInspiralFD(
+    mass_1_si, mass_2_si, spin1x, spin1y, spin1z, spin2x, spin2y, spin2z,
+    distance_si, f_lower_hz, delta_t, f_lower_hz
+)
+
+# Access the waveform data
+# You can use hp and hc for further analysis or visualization
